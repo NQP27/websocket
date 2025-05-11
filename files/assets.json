@@ -1,0 +1,50 @@
+{
+  "keys": [
+    "EU", "GU", "AU", "NU", "UCAD", "UJ", "UCHF",
+    "GOLD",
+    "NASDAQ", "SPX", "NIKKEI225", "DAX40", "CAC40",
+    "FTSE100", "FTSEMIB", "IBEX35", "ASX200"
+  ],
+  "symbols": {
+    "oanda": {
+      "EU"       : "EURUSD",
+      "GU"       : "GBPUSD",
+      "AU"       : "AUDUSD",
+      "NU"       : "NZDUSD",
+      "UJ"       : "USDJPY",
+      "UCAD"     : "USDCAD",
+      "UCHF"     : "USDCHF",
+      "GOLD"     : "XAUUSD",
+      "DJ"       : "US30USD",
+      "NASDAQ"   : "NAS100USD",
+      "SPX"      : "SPX500USD",
+      "NIKKEI225": "JP225USD",
+      "DAX40"    : "DE40EUR",
+      "CAC40"    : "FR40EUR",
+      "FTSE100"  : "UK100GBP",
+      "FTSEMIB"  : "IT40EUR",
+      "IBEX35"   : "ES35",
+      "ASX200"   : "AU200AUD"
+    },
+    "fxcm": {
+      "EU"       : "EURUSD",
+      "GU"       : "GBPUSD",
+      "AU"       : "AUDUSD",
+      "NU"       : "NZDUSD",
+      "UJ"       : "USDJPY",
+      "UCAD"     : "USDCAD",
+      "UCHF"     : "USDCHF",
+      "GOLD"     : "XAUUSD",
+      "DJ"       : "US30",
+      "NASDAQ"   : "NAS100",
+      "SPX"      : "SP500",
+      "NIKKEI225": "N225",
+      "DAX40"    : "DAX30",
+      "CAC40"    : "CAC40",
+      "FTSE100"  : "FTSE100",
+      "FTSEMIB"  : "FTSEMIB",
+      "IBEX35"   : "IBEX35",
+      "ASX200"   : "ASX200"
+    }
+  }
+}

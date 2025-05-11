@@ -1,0 +1,4 @@
+.env
+.venv
+env/
+files/forex_key.json
