@@ -6,6 +6,8 @@ import re
 import pandas as pd
 import sys
 import time
+from pathlib import Path
+
 from websocket import create_connection
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -34,10 +36,11 @@ def parse_series(raw_data, symbol):
         print(f"\u274c Parse error for {symbol}:", e)
         return pd.DataFrame()
 
-def process_batch(symbols, source, timeframe, n_bars, token, max_retries=1):
+def process_batch(symbols, source, timeframe, n_bars, token, max_retries=4):
     for attempt in range(1, max_retries + 1):
         try:
             print(f"\n\U0001f680 Processing batch: {symbols} (Lần thử {attempt}/{max_retries})")
+            time.sleep(random.uniform(1, 10))  # ngủ từ 1 đến 10 giây, số thực
             ws = create_connection("wss://data.tradingview.com/socket.io/websocket", timeout=10)
             if not ws.connected:
                 raise ConnectionError("Không thể kết nối WebSocket")
@@ -78,7 +81,8 @@ def process_batch(symbols, source, timeframe, n_bars, token, max_retries=1):
                     if len(completed) == len(symbols):
                         break
                 except Exception as e:
-                    print(f"\u26a0\ufe0f WebSocket error trong quá trình nhận dữ liệu: {e}")
+                    print(f"\u26a0\ufe0f WebSocket error trong quá trình nhận dữ liệu {symbols}: {e}")
+                    ws.close()
                     raise
 
             all_df = []
@@ -93,7 +97,7 @@ def process_batch(symbols, source, timeframe, n_bars, token, max_retries=1):
 
         except Exception as e:
             print(f"\u274c Lỗi trong process_batch (attempt {attempt}/{max_retries}): {e}")
-            time.sleep(10)
+            # time.sleep(10)
 
     print("\u274c Đã vượt quá số lần thử lại, bỏ qua batch này.")
     return pd.DataFrame()
@@ -106,13 +110,14 @@ def main():
     assetFilePath = r"./files/assets.json"
     with open(assetFilePath, "r") as file:
         symbols = list(json.load(file)['symbols']['oanda'].values())
-        symbols = symbols[:]
+        symbols = symbols[:12]
+        # symbols = symbols[12:]
 
     timeframe = sys.argv[1] if len(sys.argv) > 1 else "1D"
     n_bars = 20000
     source = "OANDA"
 
-    batch_size = 5
+    batch_size = 2
     all_batches_df = []
 
     batches = [symbols[i:i+batch_size] for i in range(0, len(symbols), batch_size)]
@@ -129,8 +134,20 @@ def main():
         final_df.set_index(["symbol", "datetime"], inplace=True)
         print("\n\u2705 Dữ liệu tổng hợp:")
         print(final_df)
-        date_suffix = datetime.datetime.now().strftime("%Y%m%d")
-        final_df.to_csv(f"result_{timeframe}_{date_suffix}.csv")
+
+        now = datetime.datetime.now()
+        date_path = now.strftime("%Y/%m/%d")
+        time_suffix = now.strftime("%H%M")
+
+        # Tạo đường dẫn đầy đủ trong thư mục 'data'
+        folder = Path("data") / date_path / timeframe
+        folder.mkdir(parents=True, exist_ok=True)  # Tạo thư mục nếu chưa có
+
+        file_name = f"ohlc_{timeframe}_{time_suffix}.csv"
+        output_path = folder / file_name
+
+        final_df.to_csv(output_path)
+        print(f"\n✅ Đã lưu dữ liệu vào: {output_path}")
     else:
         print("\u274c Không lấy được dữ liệu nào.")
 
