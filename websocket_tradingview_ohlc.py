@@ -7,43 +7,103 @@ import pandas as pd
 import sys
 import time
 from pathlib import Path
-
+from constants.enum import TimeframesTv, Tables
 from websocket import create_connection
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import psycopg2
+from psycopg2.extras import execute_values
+
+DB_CONFIG = {
+    "host": "localhost",
+    "port": 5433,
+    "dbname": "postgres",
+    "user": "postgres",
+    "password": "admin",
+}
+
+
+def insert_to_db(df: pd.DataFrame, table_name: str):
+    df = df.reset_index() 
+    if df.empty:
+        print(f"⚠️ DataFrame rỗng, bỏ qua insert vào bảng {table_name}")
+        return
+
+    try:
+        with psycopg2.connect(**DB_CONFIG) as conn:
+            with conn.cursor() as cur:
+                columns = [
+                    "symbol", "prename", "broker", "data_source",
+                    "open", "close", "high", "low", "co", "hl",
+                    "tick_vol", "datetime", "direction"
+                ]
+                values = [tuple(row[col] for col in columns) for _, row in df.iterrows()]
+                query = f"INSERT INTO {table_name} ({','.join(columns)}) VALUES %s"
+                execute_values(cur, query, values)
+                conn.commit()
+                print(f"✅ Đã insert {len(df)} dòng vào bảng {table_name}")
+    except Exception as e:
+        print(f"❌ Lỗi khi insert dữ liệu vào DB: {e}")
+
+
+def get_table_from_timeframe(tf_str: str, env="staging"):
+    try:
+        tf_enum = next(tf for tf in TimeframesTv if tf.value == tf_str)
+        table_name = Tables[tf_enum.name].value
+        return f"{env}.{table_name}"
+    except (StopIteration, KeyError) as e:
+        raise ValueError(f"❌ Không tìm thấy bảng tương ứng với timeframe '{tf_str}'") from e
+
 
 def gen_session(prefix="cs"):
-    return prefix + "_" + "".join(random.choices(string.ascii_lowercase, k=12))
+    return f"{prefix}_{''.join(random.choices(string.ascii_lowercase, k=12))}"
+
 
 def prepend_header(msg):
     return f"~m~{len(msg)}~m~{msg}"
 
+
 def create_message(method, params):
     return json.dumps({"m": method, "p": params}, separators=(",", ":"))
 
-def parse_series(raw_data, symbol):
+
+def parse_series(raw_data, symbol, prename, broker, data_source="tradingview"):
     try:
-        out = re.search('"s":\[(.+?)\}\]', raw_data).group(1)
-        x = out.split(',{"')
+        match = re.search('"s":\[(.+?)\}\]', raw_data)
+        if not match:
+            raise ValueError("Không tìm thấy chuỗi dữ liệu trong raw_data")
+        data_raw = match.group(1).split(',{"')
+
         data = []
-        for xi in x:
-            xi = re.split("\\[|:|,|\\]", xi)
-            ts = datetime.datetime.fromtimestamp(float(xi[4]))
-            row = [symbol, ts] + [float(xi[i]) for i in range(5, 10)]
+        for item in data_raw:
+            parts = re.split(r"\[|:|,|\]", item)
+            ts = datetime.datetime.fromtimestamp(float(parts[4]))
+            o, h, l, c, v = map(float, parts[5:10])
+            co = round(c - o, 5)
+            hl = round(h - l, 5)
+            direction = "up" if co > 0 else "down" if co < 0 else "keep"
+
+            row = [
+                symbol, prename, broker, data_source,
+                o, c, h, l, co, hl, v, ts, direction
+            ]
             data.append(row)
-        df = pd.DataFrame(data, columns=["symbol", "datetime", "open", "high", "low", "close", "volume"])
-        return df
+
+        return pd.DataFrame(data, columns=[
+            "symbol", "prename", "broker", "data_source",
+            "open", "close", "high", "low", "co", "hl",
+            "tick_vol", "datetime", "direction"
+        ])
     except Exception as e:
-        print(f"\u274c Parse error for {symbol}:", e)
+        print(f"❌ Lỗi parse dữ liệu {symbol}: {e}")
         return pd.DataFrame()
 
-def process_batch(symbols, source, timeframe, n_bars, token, max_retries=4):
+
+def process_batch(assets, source, timeframe, n_bars, token, max_retries=4):
     for attempt in range(1, max_retries + 1):
         try:
-            print(f"\n\U0001f680 Processing batch: {symbols} (Lần thử {attempt}/{max_retries})")
-            time.sleep(random.uniform(1, 10))  # ngủ từ 1 đến 10 giây, số thực
+            print(f"🚀 Xử lý batch {assets} (Thử lần {attempt}/{max_retries})")
+            time.sleep(random.uniform(1, 10))
             ws = create_connection("wss://data.tradingview.com/socket.io/websocket", timeout=10)
-            if not ws.connected:
-                raise ConnectionError("Không thể kết nối WebSocket")
 
             def send(method, params):
                 msg = prepend_header(create_message(method, params))
@@ -52,104 +112,98 @@ def process_batch(symbols, source, timeframe, n_bars, token, max_retries=4):
             send("set_auth_token", [token])
             quote_session = gen_session("qs")
             send("quote_create_session", [quote_session])
-            for symbol in symbols:
-                send("quote_add_symbols", [quote_session, f"{source}:{symbol}", {"flags": ["force_permission"]}])
+            for symbol, prename in assets:
+                send("quote_add_symbols", [quote_session, f"{source}:{prename}", {"flags": ["force_permission"]}])
 
-            raw_data = {}
+            raw_data = {prename: "" for _, prename in assets}
             completed = set()
 
-            for i, symbol in enumerate(symbols):
+            for i, (symbol, prename) in enumerate(assets):
                 chart_session = gen_session("cs")
-                send("chart_create_session", [chart_session, ""])
                 sym_id = f"symbol_{i}"
                 series_id = f"s{i}"
+                send("chart_create_session", [chart_session, ""])
                 send("resolve_symbol", [
                     chart_session, sym_id,
-                    f'={{"symbol":"{source}:{symbol}","adjustment":"splits","session":"regular"}}'
+                    f'={{"symbol":"{source}:{prename}","adjustment":"splits","session":"regular"}}'
                 ])
                 send("create_series", [chart_session, series_id, series_id, sym_id, timeframe, n_bars])
-                raw_data[symbol] = ""
 
-            while True:
+            while len(completed) < len(assets):
                 try:
                     res = ws.recv()
-                    for i, symbol in enumerate(symbols):
+                    for i, (_, prename) in enumerate(assets):
                         if f'"s{i}"' in res:
-                            raw_data[symbol] += res + "\n"
-                            if "series_completed" in res and symbol not in completed:
-                                completed.add(symbol)
-                    if len(completed) == len(symbols):
-                        break
+                            raw_data[prename] += res + "\n"
+                            if "series_completed" in res:
+                                completed.add(prename)
                 except Exception as e:
-                    print(f"\u26a0\ufe0f WebSocket error trong quá trình nhận dữ liệu {symbols}: {e}")
+                    print(f"⚠️ WebSocket error khi nhận dữ liệu: {e}")
                     ws.close()
                     raise
 
-            all_df = []
-            for symbol in symbols:
-                print(f"\U0001f4c8 Dữ liệu nến cho {symbol}:")
-                df = parse_series(raw_data[symbol], symbol)
-                print(df.head())
-                all_df.append(df)
-
             ws.close()
+
+            all_df = []
+            for symbol, prename in assets:
+                df = parse_series(raw_data[prename], symbol, prename, source)
+                if not df.empty:
+                    all_df.append(df)
+
             return pd.concat(all_df) if all_df else pd.DataFrame()
 
         except Exception as e:
-            print(f"\u274c Lỗi trong process_batch (attempt {attempt}/{max_retries}): {e}")
-            # time.sleep(10)
+            print(f"❌ Lỗi trong batch (attempt {attempt}): {e}")
+            time.sleep(2)  # Tạm dừng trước khi retry
 
-    print("\u274c Đã vượt quá số lần thử lại, bỏ qua batch này.")
+    print("❌ Vượt quá số lần retry, bỏ batch.")
     return pd.DataFrame()
 
-def main():
-    tokenFilePath = r"./files/forex_key.json"
-    with open(tokenFilePath, "r") as file:
-        token = json.load(file)["tradingview"]["sen07"]["token"]
 
-    assetFilePath = r"./files/assets.json"
-    with open(assetFilePath, "r") as file:
-        symbols = list(json.load(file)['symbols']['oanda'].values())
-        symbols = symbols[:12]
-        # symbols = symbols[12:]
+def main():
+    with open("./files/forex_key.json", "r") as f:
+        token = json.load(f)["tradingview"]["sen07"]["token"]
+
+    with open("./files/assets.json", "r") as f:
+        assets = list(json.load(f)["symbols"]["oanda"].items())[:12]
 
     timeframe = sys.argv[1] if len(sys.argv) > 1 else "1D"
     n_bars = 20000
     source = "OANDA"
-
     batch_size = 2
-    all_batches_df = []
 
-    batches = [symbols[i:i+batch_size] for i in range(0, len(symbols), batch_size)]
+    batches = [assets[i:i + batch_size] for i in range(0, len(assets), batch_size)]
+    all_dfs = []
 
     with ThreadPoolExecutor(max_workers=6) as executor:
         futures = [executor.submit(process_batch, batch, source, timeframe, n_bars, token) for batch in batches]
         for future in as_completed(futures):
-            df_batch = future.result()
-            if not df_batch.empty:
-                all_batches_df.append(df_batch)
+            df = future.result()
+            if not df.empty:
+                all_dfs.append(df)
 
-    if all_batches_df:
-        final_df = pd.concat(all_batches_df)
-        final_df.set_index(["symbol", "datetime"], inplace=True)
-        print("\n\u2705 Dữ liệu tổng hợp:")
-        print(final_df)
+    if not all_dfs:
+        print("❌ Không có dữ liệu nào.")
+        return
 
-        now = datetime.datetime.now()
-        date_path = now.strftime("%Y/%m/%d")
-        time_suffix = now.strftime("%H%M")
+    final_df = pd.concat(all_dfs)
+    print("✅ Tổng hợp dữ liệu xong:")
+    print(final_df.head())
 
-        # Tạo đường dẫn đầy đủ trong thư mục 'data'
-        folder = Path("data") / date_path / timeframe
-        folder.mkdir(parents=True, exist_ok=True)  # Tạo thư mục nếu chưa có
+    final_df.set_index(["symbol", "datetime"], inplace=True)
 
-        file_name = f"ohlc_{timeframe}_{time_suffix}.csv"
-        output_path = folder / file_name
+    now = datetime.datetime.now()
+    folder = Path("data") / now.strftime("%Y/%m/%d") / timeframe
+    folder.mkdir(parents=True, exist_ok=True)
+    file_path = folder / f"ohlc_{timeframe}_{now.strftime('%H%M')}.csv"
+    final_df.to_csv(file_path)
+    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"\n[{now_str}] ✅ Lưu {len(final_df):,} dòng vào: {file_path}")
 
-        final_df.to_csv(output_path)
-        print(f"\n✅ Đã lưu dữ liệu vào: {output_path}")
-    else:
-        print("\u274c Không lấy được dữ liệu nào.")
+
+    table_name = get_table_from_timeframe(timeframe)
+    insert_to_db(final_df, table_name)
+
 
 if __name__ == "__main__":
     main()

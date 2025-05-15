@@ -26,7 +26,7 @@ stop_event = threading.Event()
 def handle_order_book(_, message, conn, cur):
     try:
         if isinstance(message, str):
-            message = json.loads(message)
+            message = json.loads(message) 
         if message.get("e") != "depthUpdate":
             return
 
@@ -104,6 +104,7 @@ if __name__ == "__main__":
         t.start()
         threads.append(t)
 
+    # Chờ tất cả thread kết thúc
     for t in threads:
         t.join()
 

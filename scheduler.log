@@ -1,0 +1,99 @@
+2025-05-15 19:58:01,345 - INFO - Scheduler started.
+2025-05-15 19:58:01,348 - INFO - Current time (UTC): 2025-05-15 12:58:01
+2025-05-15 19:58:01,348 - INFO - Starting timeframe: M1
+2025-05-15 19:58:23,856 - INFO - Completed timeframe: M1
+2025-05-15 19:59:23,858 - INFO - Current time (UTC): 2025-05-15 12:59:23
+2025-05-15 19:59:23,860 - INFO - Starting timeframe: M1
+2025-05-15 19:59:41,531 - INFO - Completed timeframe: M1
+2025-05-15 20:00:41,532 - INFO - Current time (UTC): 2025-05-15 13:00:41
+2025-05-15 20:00:41,536 - INFO - Starting timeframe: M1
+2025-05-15 20:01:10,491 - INFO - Completed timeframe: M1
+2025-05-15 20:01:10,491 - INFO - Starting timeframe: M5
+2025-05-15 20:01:32,100 - INFO - Completed timeframe: M5
+2025-05-15 20:01:32,101 - INFO - Starting timeframe: M15
+2025-05-15 20:02:00,199 - INFO - Completed timeframe: M15
+2025-05-15 20:02:00,199 - INFO - Starting timeframe: M30
+2025-05-15 20:02:34,749 - INFO - Completed timeframe: M30
+2025-05-15 20:02:34,750 - INFO - Starting timeframe: H1
+2025-05-15 20:02:56,548 - INFO - Completed timeframe: H1
+2025-05-15 20:03:56,549 - INFO - Current time (UTC): 2025-05-15 13:03:56
+2025-05-15 20:03:56,551 - INFO - Starting timeframe: M1
+2025-05-15 20:04:12,663 - INFO - Completed timeframe: M1
+2025-05-15 20:05:12,663 - INFO - Current time (UTC): 2025-05-15 13:05:12
+2025-05-15 20:05:12,665 - INFO - Starting timeframe: M1
+2025-05-15 20:05:32,458 - INFO - Completed timeframe: M1
+2025-05-15 20:05:32,459 - INFO - Starting timeframe: M5
+2025-05-15 20:05:51,290 - INFO - Completed timeframe: M5
+2025-05-15 20:06:51,291 - INFO - Current time (UTC): 2025-05-15 13:06:51
+2025-05-15 20:06:51,292 - INFO - Starting timeframe: M1
+2025-05-15 20:07:05,309 - INFO - Completed timeframe: M1
+2025-05-15 20:08:05,311 - INFO - Current time (UTC): 2025-05-15 13:08:05
+2025-05-15 20:08:05,313 - INFO - Starting timeframe: M1
+2025-05-15 20:08:21,596 - INFO - Completed timeframe: M1
+2025-05-15 20:09:21,597 - INFO - Current time (UTC): 2025-05-15 13:09:21
+2025-05-15 20:09:21,598 - INFO - Starting timeframe: M1
+2025-05-15 20:09:47,284 - INFO - Completed timeframe: M1
+2025-05-15 20:10:47,287 - INFO - Current time (UTC): 2025-05-15 13:10:47
+2025-05-15 20:10:47,350 - INFO - Starting timeframe: M1
+2025-05-15 20:11:04,033 - INFO - Completed timeframe: M1
+2025-05-15 20:11:04,033 - INFO - Starting timeframe: M5
+2025-05-15 20:11:18,734 - INFO - Completed timeframe: M5
+2025-05-15 20:12:18,735 - INFO - Current time (UTC): 2025-05-15 13:12:18
+2025-05-15 20:12:18,735 - INFO - Starting timeframe: M1
+2025-05-15 20:12:43,760 - INFO - Completed timeframe: M1
+2025-05-15 20:13:43,761 - INFO - Current time (UTC): 2025-05-15 13:13:43
+2025-05-15 20:13:43,763 - INFO - Starting timeframe: M1
+2025-05-15 20:14:10,869 - INFO - Completed timeframe: M1
+2025-05-15 20:15:10,870 - INFO - Current time (UTC): 2025-05-15 13:15:10
+2025-05-15 20:15:10,870 - INFO - Starting timeframe: M1
+2025-05-15 20:15:26,199 - INFO - Completed timeframe: M1
+2025-05-15 20:15:26,199 - INFO - Starting timeframe: M5
+2025-05-15 20:15:40,917 - INFO - Completed timeframe: M5
+2025-05-15 20:15:40,917 - INFO - Starting timeframe: M15
+2025-05-15 20:15:51,049 - INFO - Completed timeframe: M15
+2025-05-15 20:16:51,050 - INFO - Current time (UTC): 2025-05-15 13:16:51
+2025-05-15 20:16:51,050 - INFO - Starting timeframe: M1
+2025-05-15 20:17:05,260 - INFO - Completed timeframe: M1
+2025-05-15 20:18:05,260 - INFO - Current time (UTC): 2025-05-15 13:18:05
+2025-05-15 20:18:05,261 - INFO - Starting timeframe: M1
+2025-05-15 20:18:18,818 - INFO - Completed timeframe: M1
+2025-05-15 20:19:18,819 - INFO - Current time (UTC): 2025-05-15 13:19:18
+2025-05-15 20:19:18,819 - INFO - Starting timeframe: M1
+2025-05-15 20:19:33,509 - INFO - Completed timeframe: M1
+2025-05-15 20:20:33,510 - INFO - Current time (UTC): 2025-05-15 13:20:33
+2025-05-15 20:20:33,512 - INFO - Starting timeframe: M1
+2025-05-15 20:20:46,702 - INFO - Completed timeframe: M1
+2025-05-15 20:20:46,702 - INFO - Starting timeframe: M5
+2025-05-15 20:21:05,100 - INFO - Completed timeframe: M5
+2025-05-15 20:22:05,101 - INFO - Current time (UTC): 2025-05-15 13:22:05
+2025-05-15 20:22:05,103 - INFO - Starting timeframe: M1
+2025-05-15 20:22:17,052 - INFO - Completed timeframe: M1
+2025-05-15 20:23:17,052 - INFO - Current time (UTC): 2025-05-15 13:23:17
+2025-05-15 20:23:17,053 - INFO - Starting timeframe: M1
+2025-05-15 20:23:31,728 - INFO - Completed timeframe: M1
+2025-05-15 20:24:31,729 - INFO - Current time (UTC): 2025-05-15 13:24:31
+2025-05-15 20:24:31,731 - INFO - Starting timeframe: M1
+2025-05-15 20:25:03,893 - INFO - Completed timeframe: M1
+2025-05-15 20:26:03,894 - INFO - Current time (UTC): 2025-05-15 13:26:03
+2025-05-15 20:26:03,895 - INFO - Starting timeframe: M1
+2025-05-15 20:26:27,776 - INFO - Completed timeframe: M1
+2025-05-15 20:27:27,776 - INFO - Current time (UTC): 2025-05-15 13:27:27
+2025-05-15 20:27:27,777 - INFO - Starting timeframe: M1
+2025-05-15 20:27:56,363 - INFO - Completed timeframe: M1
+2025-05-15 20:28:56,364 - INFO - Current time (UTC): 2025-05-15 13:28:56
+2025-05-15 20:28:56,365 - INFO - Starting timeframe: M1
+2025-05-15 20:29:28,470 - INFO - Completed timeframe: M1
+2025-05-15 20:30:28,471 - INFO - Current time (UTC): 2025-05-15 13:30:28
+2025-05-15 20:30:28,472 - INFO - Starting timeframe: M1
+2025-05-15 20:30:48,504 - INFO - Completed timeframe: M1
+2025-05-15 20:30:48,504 - INFO - Starting timeframe: M5
+2025-05-15 20:31:04,120 - INFO - Completed timeframe: M5
+2025-05-15 20:31:04,120 - INFO - Starting timeframe: M15
+2025-05-15 20:31:18,106 - INFO - Completed timeframe: M15
+2025-05-15 20:31:18,106 - INFO - Starting timeframe: M30
+2025-05-15 20:31:46,894 - INFO - Completed timeframe: M30
+2025-05-15 20:32:46,894 - INFO - Current time (UTC): 2025-05-15 13:32:46
+2025-05-15 20:32:46,895 - INFO - Starting timeframe: M1
+2025-05-15 20:33:00,442 - INFO - Completed timeframe: M1
+2025-05-15 20:34:00,442 - INFO - Current time (UTC): 2025-05-15 13:34:00
+2025-05-15 20:34:00,443 - INFO - Starting timeframe: M1
