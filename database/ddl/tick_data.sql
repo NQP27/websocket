@@ -1,3 +1,6 @@
+
+CREATE SCHEMA IF NOT EXISTS dwh;
+
 CREATE TABLE IF NOT EXISTS dwh."tick_data" (
     trade_id BIGINT,
     event_time TIMESTAMPTZ NOT NULL,

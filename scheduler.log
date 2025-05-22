@@ -97,3 +97,11 @@
 2025-05-15 20:33:00,442 - INFO - Completed timeframe: M1
 2025-05-15 20:34:00,442 - INFO - Current time (UTC): 2025-05-15 13:34:00
 2025-05-15 20:34:00,443 - INFO - Starting timeframe: M1
+2025-05-16 11:23:40,984 - INFO - Scheduler started.
+2025-05-16 11:23:40,991 - INFO - Current time (UTC): 2025-05-16 04:23:40
+2025-05-16 11:23:40,992 - INFO - Starting timeframe: M1
+2025-05-16 11:24:47,625 - INFO - Completed timeframe: M1
+2025-05-16 11:25:47,625 - INFO - Current time (UTC): 2025-05-16 04:25:47
+2025-05-16 11:25:47,626 - INFO - Starting timeframe: M1
+2025-05-16 11:26:52,301 - INFO - Completed timeframe: M1
+2025-05-16 11:26:52,301 - INFO - Starting timeframe: M30

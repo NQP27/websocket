@@ -1,3 +1,5 @@
+CREATE SCHEMA IF NOT EXISTS dwh;
+
 CREATE TABLE IF NOT EXISTS dwh.order_book (
     symbol TEXT NOT NULL,
     event_time TIMESTAMPTZ NOT NULL,
