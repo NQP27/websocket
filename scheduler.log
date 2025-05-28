@@ -105,3 +105,111 @@
 2025-05-16 11:25:47,626 - INFO - Starting timeframe: M1
 2025-05-16 11:26:52,301 - INFO - Completed timeframe: M1
 2025-05-16 11:26:52,301 - INFO - Starting timeframe: M30
+2025-05-27 22:04:01,149 - INFO - Scheduler started.
+2025-05-27 22:04:01,152 - INFO - Current time (UTC): 2025-05-27 15:04:01
+2025-05-27 22:04:01,152 - INFO - Starting timeframe: M1
+2025-05-27 22:05:32,223 - INFO - Completed timeframe: M1
+2025-05-27 22:06:32,223 - INFO - Current time (UTC): 2025-05-27 15:06:32
+2025-05-27 22:06:32,224 - INFO - Starting timeframe: M1
+2025-05-27 22:07:53,481 - INFO - Completed timeframe: M1
+2025-05-27 22:07:53,481 - INFO - Starting timeframe: M5
+2025-05-27 22:08:56,139 - INFO - Completed timeframe: M5
+2025-05-27 22:08:56,139 - INFO - Starting timeframe: M15
+2025-05-27 22:09:55,863 - INFO - Completed timeframe: M15
+2025-05-27 22:34:02,500 - INFO - Scheduler started.
+2025-05-27 22:34:02,503 - INFO - Current time (UTC): 2025-05-27 15:34:02
+2025-05-27 22:34:02,504 - INFO - Starting timeframe: M1
+2025-05-27 22:35:23,794 - INFO - Completed timeframe: M1
+2025-05-27 22:36:23,794 - INFO - Current time (UTC): 2025-05-27 15:36:23
+2025-05-27 22:36:23,795 - INFO - Starting timeframe: M1
+2025-05-27 22:37:57,738 - INFO - Completed timeframe: M1
+2025-05-27 22:37:57,739 - INFO - Starting timeframe: M5
+2025-05-27 22:41:39,467 - INFO - Scheduler started.
+2025-05-27 22:41:39,470 - INFO - Current time (UTC): 2025-05-27 15:41:39
+2025-05-27 22:41:39,471 - INFO - Starting timeframe: M1
+2025-05-27 22:42:11,333 - INFO - Completed timeframe: M1
+2025-05-27 22:43:56,259 - INFO - Scheduler started.
+2025-05-27 22:43:56,263 - INFO - Current time (UTC): 2025-05-27 15:43:56
+2025-05-27 22:43:56,264 - INFO - Starting timeframe: M1
+2025-05-27 22:44:11,099 - ERROR - Error in timeframe M1: Command '['E:\\websocket\\env\\Scripts\\python.exe', 'websocket_tradingview_ohlc.py', '1']' returned non-zero exit status 1.
+2025-05-27 22:44:29,607 - INFO - Scheduler started.
+2025-05-27 22:44:29,610 - INFO - Current time (UTC): 2025-05-27 15:44:29
+2025-05-27 22:44:29,611 - INFO - Starting timeframe: M1
+2025-05-27 22:44:44,508 - INFO - Completed timeframe: M1
+2025-05-27 22:44:44,508 - INFO - Starting timeframe: D1
+2025-05-27 22:45:00,879 - INFO - Completed timeframe: D1
+2025-05-27 22:45:00,880 - INFO - Starting timeframe: W1
+2025-05-27 22:45:53,392 - INFO - Scheduler started.
+2025-05-27 22:45:53,397 - INFO - Current time (UTC): 2025-05-27 15:45:53
+2025-05-27 22:45:53,398 - INFO - Starting timeframe: M1
+2025-05-27 22:46:16,608 - INFO - Completed timeframe: M1
+2025-05-27 22:46:16,609 - INFO - Starting timeframe: M5
+2025-05-27 22:46:47,914 - INFO - Scheduler started.
+2025-05-27 22:46:47,917 - INFO - Current time (UTC): 2025-05-27 15:46:47
+2025-05-27 22:46:47,917 - INFO - Starting timeframe: M1
+2025-05-27 22:48:13,952 - INFO - Completed timeframe: M1
+2025-05-27 22:49:11,413 - INFO - Scheduler started.
+2025-05-27 22:49:11,416 - INFO - Current time (UTC): 2025-05-27 15:49:11
+2025-05-27 22:49:11,416 - INFO - Starting timeframe: M1
+2025-05-27 22:49:45,932 - INFO - Completed timeframe: M1
+2025-05-27 22:49:45,933 - INFO - Starting timeframe: H4
+2025-05-27 22:50:13,971 - INFO - Completed timeframe: H4
+2025-05-27 22:50:13,971 - INFO - Starting timeframe: H12
+2025-05-29 03:35:17,989 - INFO - Scheduler started.
+2025-05-29 03:35:17,993 - INFO - Current time (UTC): 2025-05-28 20:35:17
+2025-05-29 03:35:17,994 - INFO - Starting timeframe: M1
+2025-05-29 03:35:57,676 - INFO - Completed timeframe: M1
+2025-05-29 03:35:57,676 - INFO - Starting timeframe: M30
+2025-05-29 03:36:31,551 - INFO - Completed timeframe: M30
+2025-05-29 03:36:31,551 - INFO - Starting timeframe: H1
+2025-05-29 03:37:05,660 - INFO - Completed timeframe: H1
+2025-05-29 03:37:05,661 - INFO - Starting timeframe: H4
+2025-05-29 03:37:38,522 - INFO - Completed timeframe: H4
+2025-05-29 03:37:38,523 - INFO - Starting timeframe: H12
+2025-05-29 03:39:52,371 - INFO - Completed timeframe: H12
+2025-05-29 03:40:52,372 - INFO - Current time (UTC): 2025-05-28 20:40:52
+2025-05-29 03:40:52,373 - INFO - Starting timeframe: M1
+2025-05-29 03:41:27,243 - INFO - Completed timeframe: M1
+2025-05-29 03:41:27,243 - INFO - Starting timeframe: M30
+2025-05-29 03:42:04,949 - INFO - Completed timeframe: M30
+2025-05-29 03:42:04,949 - INFO - Starting timeframe: H1
+2025-05-29 03:42:33,748 - INFO - Completed timeframe: H1
+2025-05-29 03:43:33,748 - INFO - Current time (UTC): 2025-05-28 20:43:33
+2025-05-29 03:43:33,749 - INFO - Starting timeframe: M1
+2025-05-29 03:44:11,452 - INFO - Completed timeframe: M1
+2025-05-29 03:45:11,453 - INFO - Current time (UTC): 2025-05-28 20:45:11
+2025-05-29 03:45:11,455 - INFO - Starting timeframe: M1
+2025-05-29 03:46:01,091 - INFO - Completed timeframe: M1
+2025-05-29 03:46:01,091 - INFO - Starting timeframe: M5
+2025-05-29 03:46:23,523 - INFO - Completed timeframe: M5
+2025-05-29 03:46:23,524 - INFO - Starting timeframe: M15
+2025-05-29 03:47:03,495 - INFO - Completed timeframe: M15
+2025-05-29 03:47:03,495 - INFO - Starting timeframe: M30
+2025-05-29 03:47:38,676 - INFO - Completed timeframe: M30
+2025-05-29 03:47:38,676 - INFO - Starting timeframe: H1
+2025-05-29 03:48:13,804 - INFO - Completed timeframe: H1
+2025-05-29 03:49:13,806 - INFO - Current time (UTC): 2025-05-28 20:49:13
+2025-05-29 03:49:13,806 - INFO - Starting timeframe: M1
+2025-05-29 03:49:52,947 - INFO - Completed timeframe: M1
+2025-05-29 03:49:52,948 - INFO - Starting timeframe: H4
+2025-05-29 03:50:13,341 - INFO - Completed timeframe: H4
+2025-05-29 03:50:13,342 - INFO - Starting timeframe: H12
+2025-05-29 03:52:53,359 - INFO - Scheduler started.
+2025-05-29 03:52:53,362 - INFO - Current time (UTC): 2025-05-28 20:52:53
+2025-05-29 03:52:53,362 - INFO - Starting timeframe: H12
+2025-05-29 03:54:53,287 - INFO - Scheduler started.
+2025-05-29 03:54:53,290 - INFO - Current time (UTC): 2025-05-28 20:54:53
+2025-05-29 03:54:53,290 - INFO - Starting timeframe: D1
+2025-05-29 03:55:42,555 - INFO - Completed timeframe: D1
+2025-05-29 03:57:49,032 - INFO - Scheduler started.
+2025-05-29 03:57:49,035 - INFO - Current time (UTC): 2025-05-28 20:57:49
+2025-05-29 03:57:49,035 - INFO - Starting timeframe: D1
+2025-05-29 03:58:18,499 - INFO - Completed timeframe: D1
+2025-05-29 03:58:58,785 - INFO - Scheduler started.
+2025-05-29 03:58:58,788 - INFO - Current time (UTC): 2025-05-28 20:58:58
+2025-05-29 03:58:58,788 - INFO - Starting timeframe: W1
+2025-05-29 03:59:32,063 - INFO - Completed timeframe: W1
+2025-05-29 04:00:18,239 - INFO - Scheduler started.
+2025-05-29 04:00:18,243 - INFO - Current time (UTC): 2025-05-28 21:00:18
+2025-05-29 04:00:18,244 - INFO - Starting timeframe: MN1
+2025-05-29 04:00:34,682 - INFO - Completed timeframe: MN1

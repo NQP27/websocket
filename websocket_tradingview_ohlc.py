@@ -22,8 +22,8 @@ DB_CONFIG = {
 }
 
 
-def insert_to_db(df: pd.DataFrame, table_name: str):
-    df = df.reset_index() 
+def upsert_to_staging(df: pd.DataFrame, table_name: str):
+    df = df.reset_index()
     if df.empty:
         print(f"⚠️ DataFrame rỗng, bỏ qua insert vào bảng {table_name}")
         return
@@ -36,13 +36,27 @@ def insert_to_db(df: pd.DataFrame, table_name: str):
                     "open", "close", "high", "low", "co", "hl",
                     "tick_vol", "datetime", "direction"
                 ]
+
+                # Tạo câu VALUES cho execute_values
                 values = [tuple(row[col] for col in columns) for _, row in df.iterrows()]
-                query = f"INSERT INTO {table_name} ({','.join(columns)}) VALUES %s"
-                execute_values(cur, query, values)
+
+                # Tạo chuỗi SET để update khi trùng key
+                updates = ", ".join([f"{col}=EXCLUDED.{col}" for col in columns if col != "symbol" and col != "datetime"])
+
+                query = f"""
+                    INSERT INTO {table_name} ({','.join(columns)}) 
+                    VALUES %s 
+                    ON CONFLICT (symbol, datetime) 
+                    DO UPDATE SET {updates}
+                """
+
+                execute_values(cur, query, values, page_size=10000)
                 conn.commit()
-                print(f"✅ Đã insert {len(df)} dòng vào bảng {table_name}")
+                print(f"✅ Đã upsert {len(df)} dòng vào bảng {table_name}")
     except Exception as e:
-        print(f"❌ Lỗi khi insert dữ liệu vào DB: {e}")
+        print(f"❌ Lỗi khi upsert dữ liệu vào DB: {e}")
+
+
 
 
 def get_table_from_timeframe(tf_str: str, env="staging"):
@@ -202,7 +216,7 @@ def main():
 
 
     table_name = get_table_from_timeframe(timeframe)
-    insert_to_db(final_df, table_name)
+    upsert_to_staging(final_df, table_name)
 
 
 if __name__ == "__main__":

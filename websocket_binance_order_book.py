@@ -7,6 +7,10 @@ from datetime import datetime
 from binance.websocket.spot.websocket_stream import SpotWebsocketStreamClient
 import signal
 
+
+RECONNECT_INTERVAL = 3000 # Thời gian kết nối lại (giây)
+
+
 # Thiết lập log
 logging.basicConfig(level=logging.INFO)
 
@@ -66,21 +70,39 @@ def run_symbols_group(symbols):
     def on_message(_, msg):
         handle_order_book(_, msg, conn, cur)
 
-    ws_client = SpotWebsocketStreamClient(on_message=on_message)
-
-    for symbol in symbols:
-        stream = f"{symbol.lower()}@depth@100ms"
-        ws_client.subscribe(stream=stream)
     print(f"🧵 Thread started for: {symbols}")
+
+    ws_client = None
+    last_reconnect_time = 0
 
     try:
         while not stop_event.is_set():
+            current_time = time.time()
+            if ws_client is None or current_time - last_reconnect_time >= RECONNECT_INTERVAL:
+                # Reconnect WebSocket sau mỗi 1 tiếng
+                if ws_client is not None:
+                    print(f"🔄 Reconnecting WebSocket for: {symbols}")
+                    ws_client.stop()
+                    time.sleep(1)  # nghỉ 1 chút để đảm bảo ngắt kết nối xong
+
+                ws_client = SpotWebsocketStreamClient(on_message=on_message)
+
+                for symbol in symbols:
+                    stream = f"{symbol.lower()}@depth@100ms"
+                    ws_client.subscribe(stream=stream)
+
+                last_reconnect_time = current_time
+                print(f"✅ WebSocket connected for: {symbols}")
+
             time.sleep(1)
+
     finally:
-        ws_client.stop()
+        if ws_client is not None:
+            ws_client.stop()
         cur.close()
         conn.close()
         print(f"🔴 Thread stopped for: {symbols}")
+
 
 # === Hàm xử lý Ctrl + C ===
 def signal_handler(sig, frame):

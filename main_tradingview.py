@@ -19,15 +19,15 @@ logger.addHandler(log_handler)
 # Mapping timeframe -> điều kiện trigger chạy
 timeframe_conditions = {
     TimeframesTv.M1: lambda dt: True,
-    TimeframesTv.M5: lambda dt: dt.minute % 3 == 0,
-    TimeframesTv.M15: lambda dt: dt.minute % 3 == 0,
-    TimeframesTv.M30: lambda dt: dt.minute % 5 == 0,
-    TimeframesTv.H1: lambda dt: dt.minute % 5 == 0,
-    TimeframesTv.H4: lambda dt: dt.minute % 7 == 0,
-    TimeframesTv.H12: lambda dt: dt.minute % 7 == 0,
-    TimeframesTv.D1: lambda dt: dt.minute % 11 == 0,
-    TimeframesTv.W1: lambda dt: dt.minute % 11 == 0,
-    TimeframesTv.MN1: lambda dt: dt.minute % 13 == 0,
+    TimeframesTv.M5: lambda dt: dt.minute % 5 == 0,
+    TimeframesTv.M15: lambda dt: dt.minute % 5 == 0,
+    TimeframesTv.M30: lambda dt: dt.minute % 11 == 0,
+    TimeframesTv.H1: lambda dt: dt.minute % 11 == 0,
+    TimeframesTv.H4: lambda dt: dt.minute % 17 == 0,
+    TimeframesTv.H12: lambda dt: dt.minute % 17 == 0,
+    TimeframesTv.D1: lambda dt: dt.minute % 23 == 0,
+    TimeframesTv.W1: lambda dt: dt.minute % 23 == 0,
+    TimeframesTv.MN1: lambda dt: dt.minute % 29 == 0,
 }
 
 # Lưu trạng thái lỗi liên tục
