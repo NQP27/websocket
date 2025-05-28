@@ -14,7 +14,7 @@ import psycopg2
 from psycopg2.extras import execute_values
 
 DB_CONFIG = {
-    "host": "localhost",
+    "host": "timescale/timescaledb",
     "port": 5433,
     "dbname": "postgres",
     "user": "postgres",
