@@ -12,15 +12,23 @@ from websocket import create_connection
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import psycopg2
 from psycopg2.extras import execute_values
+import os
+
+# DB_CONFIG = {
+#     "host": "host.docker.internal",
+#     "port": 5433,
+#     "dbname": "postgres",
+#     "user": "postgres",
+#     "password": "admin",
+# }
 
 DB_CONFIG = {
-    "host": "timescale/timescaledb",
-    "port": 5433,
-    "dbname": "postgres",
-    "user": "postgres",
-    "password": "admin",
+    "host": os.environ.get("DB_HOST", "db"),      # "db" là tên service của container TimescaleDB
+    "port": int(os.environ.get("DB_PORT", 5432)), # cổng nội bộ là 5432
+    "dbname": os.environ.get("DB_NAME", "postgres"),
+    "user": os.environ.get("DB_USER", "postgres"),
+    "password": os.environ.get("DB_PASS", "admin"),
 }
-
 
 def upsert_to_staging(df: pd.DataFrame, table_name: str):
     df = df.reset_index()

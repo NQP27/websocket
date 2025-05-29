@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  db:
+    image: timescale/timescaledb:latest-pg15
+    container_name: timescaledb1
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5433:5432"
+
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PASS: admin

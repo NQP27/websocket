@@ -1,7 +1,7 @@
 import subprocess
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -66,7 +66,7 @@ def main():
     print("Scheduler running, check scheduler.log for details.")
 
     while True:
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         logger.info(f"Current time (UTC): {now.strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"\n🕐 {now.strftime('%Y-%m-%d %H:%M:%S')} UTC")
         for tf, condition in timeframe_conditions.items():

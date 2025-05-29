@@ -213,3 +213,7 @@
 2025-05-29 04:00:18,243 - INFO - Current time (UTC): 2025-05-28 21:00:18
 2025-05-29 04:00:18,244 - INFO - Starting timeframe: MN1
 2025-05-29 04:00:34,682 - INFO - Completed timeframe: MN1
+2025-05-29 21:07:12,513 - INFO - Scheduler started.
+2025-05-29 21:07:12,514 - INFO - Current time (UTC): 2025-05-29 14:07:12
+2025-05-29 21:07:12,515 - INFO - Starting timeframe: M1
+2025-05-29 21:07:37,087 - INFO - Completed timeframe: M1
